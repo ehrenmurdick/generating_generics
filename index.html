@@ -49,10 +49,10 @@ if err != nil {
   }
 }</code></pre>
         <ul>
+          <li class="check fragment">Catch problems at build time</li>
           <li class="cross fragment">Duplicated error handling</li>
           <li class="cross fragment">Hard to understand</li>
           <li class="cross fragment">Lots of boilerplate</li>
-          <li class="check fragment">Catch problems at build time</li>
         </ul>
       </section>
     </section>
@@ -78,8 +78,8 @@ opt2.
         <ul>
           <li class="check fragment">Handle error once</li>
           <li class="check fragment">Easy to understand</li>
-          <li class="cross fragment">Lots of boilerplate</li>
           <li class="check fragment">Catch problems at build time</li>
+          <li class="cross fragment">Lots of boilerplate</li>
         </ul>
       </section>
     </section>
@@ -109,6 +109,62 @@ opt1.
           <li class="cross fragment">Problems come up at run time</li>
         </ul>
       </section>
+    </section>
+
+    <section>
+      <section>
+        <h3>Generics to the rescue!</h3>
+      </section>
+
+      <section>
+        <p>An example in Swift</p>
+        <pre><code class="hljs swift">struct Stack&lt;Item&gt; {
+  var items = [Item]()
+}</code></pre>
+        <p class="fragment">…is basically just generating…</p>
+        <pre class="fragment"><code class="hljs swift">struct StackInteger {
+  var items = [Integer]()
+}</code></pre>
+        <pre class="fragment"><code class="hljs swift">struct StackString {
+  var items = [String]()
+}</code></pre>
+      </section>
+
+      <section>
+        <p>We can generate too! (at build time)</p>
+        <pre><code class="hljs go">//go:generate ./optional Document</code></pre>
+        <pre class="fragment"><code class="hljs go">type Optional&lt;%= Item %&gt; interface {
+	Try(func(&lt;%= Item %&gt;) (&lt;%= Item %&gt;, error)) Optional&lt;%= Item %&gt;
+	HandleErr(func(error) error) Optional&lt;%= Item %&gt;
+}</code></pre>
+      </section>
+
+      <section>
+        <p>Using Optional&lt;%= Item %&gt;</p>
+        <pre class=""><code class="hljs go">doc3 := entities.NewDocument("document 2")
+opt2 := optionals.WrapDocument(doc2)
+opt2.
+  Try(printDocument).
+  Try(saveDocument).
+  HandleErr(printError)</code></pre>
+        <ul>
+          <li class="check fragment">Handle error once</li>
+          <li class="check fragment">Not a lot of code</li>
+          <li class="check fragment">Problems caught at build time</li>
+          <li class="cross fragment">Hard to understand</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Dont use it</h3>
+        <img class="fragment" src="imgs/wtf.png"/>
+      </section>
+    </section>
+
+    <section>
+      <h3>Links</h3>
+      <p><a href="http://github.com/ehrenmurdick/container_talk">github.com/ehrenmurdick/container_talk</a></p>
+      <p><a href="http://github.com/ehrenmurdick/generating_generics">github.com/ehrenmurdick/generating_generics</a></p>
     </section>
   </div>
 </div>
