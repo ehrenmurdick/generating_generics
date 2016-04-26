@@ -1,0 +1,5 @@
+End-to-end testing of Rails applications has become relatively standard, but causes us to miss many more mistakes in our code than we think. I’ll show that End-to-End testing is faulty because it hides more problems than it exposes and provides a false sense of security, and argue that contract testing is much more effective.
+
+End-to-end test suites cannot actually cover all boundary conditions in an application because the many moving parts’ conditions multiply into a combinatorial explosion.  Contract testing is an alternative approach that isolates each moving part and tests it individually, turning the multiplication problem into a sum instead.  I’ll walk through a step by step process for doing outside-in testing of Rails applications without using End-to-End tests. I’ll walk though a practical application of verifying contract tests that results in higher code awareness and confidence.
+
+Finally I’ll show how using these techniques can expose and de-mystify much of the magic in Rails applications.
