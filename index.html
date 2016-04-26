@@ -25,8 +25,119 @@
 
 <div class="reveal">
   <div class="slides">
+    <section>
+      <p>Ehren Murdick</p>
+      <p>@rubyprogrammer</p>
+      <p>github.com/ehrenmurdick</p>
+    </section>
+
+    <section>
+      <h1>Generating Generics</h1>
+    </section>
+
+    <section>
+      <section>
+        <p>Pyramid of errors</p>
+        <pre><code class="hljs go">doc1 := entities.NewDocument("document 1")
+_, err := printDocument(doc1)
+if err != nil {
+  printError(err)
+} else {
+  _, err = saveDocument(doc1)
+  if err != nil {
+    printError(err)
+  }
+}</code></pre>
+        <ul>
+          <li class="cross fragment">Duplicated error handling</li>
+          <li class="cross fragment">Hard to understand</li>
+          <li class="cross fragment">Lots of boilerplate</li>
+          <li class="check fragment">Catch problems at build time</li>
+        </ul>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <p>Container!</p>
+        <pre><code class="hljs golang">type OptionalDocument interface {
+  Try(func(Document) (Document, error)) OptionalDocument
+  HandleErr(func(error) error) OptionalDocument
+}</code></pre>
+        <pre class="fragment"><code>func printDocument(d Document) (Document, error)</code></pre>
+      </section>
+
+      <section>
+        <p>Using OptionalDocument</p>
+        <pre class=""><code class="hljs go">doc3 := entities.NewDocument("document 2")
+opt2 := optionals.WrapDocument(doc2)
+opt2.
+  Try(printDocument).
+  Try(saveDocument).
+  HandleErr(printError)</code></pre>
+        <ul>
+          <li class="check fragment">Handle error once</li>
+          <li class="check fragment">Easy to understand</li>
+          <li class="cross fragment">Lots of boilerplate</li>
+          <li class="check fragment">Catch problems at build time</li>
+        </ul>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <p>Contain Anything</p>
+        <pre><code class="hljs go">type OptionalAny interface {
+  Try(f func(interface{}) (interface{}, error)) OptionalAny
+  HandleErr(f func(error) error) OptionalAny
+}</code></pre>
+        <pre class="fragment"><code>func printAny(i interface{}) (interface{}, error)</code></pre>
+      </section>
+
+      <section>
+        <p>Using OptionalAny</p>
+        <pre><code class="hljs go">doc3 := entities.NewDocument("document 3")
+opt1 := optionals.WrapAny(doc3, nil)
+opt1.
+  Try(printAny).
+  Try(saveAny).
+  HandleErr(printError)</code></pre>
+        <ul>
+          <li class="check fragment">Handle error once</li>
+          <li class="check fragment">Easy to understand</li>
+          <li class="check fragment">Not a lot of code</li>
+          <li class="cross fragment">Problems come up at run time</li>
+        </ul>
+      </section>
+    </section>
   </div>
 </div>
+
+<style type="text/css">
+li.check:before {
+  content: "\2713";
+  margin-left: -1em;
+  margin-right: 0.5em;
+  width: 1em;
+  padding: 0;
+  color: green;
+}
+li.check {
+  list-style-type: none;
+}
+
+li.cross:before {
+  content: "\2717";
+  margin-left: -1em;
+  padding: 0;
+  width: 1em;
+  margin-right: 0.51em;
+  color: red;
+}
+li.cross {
+  list-style-type: none;
+}
+</style>
 
 <script src="lib/js/head.min.js"></script>
 <script src="js/reveal.js"></script>
