@@ -120,13 +120,16 @@ opt1.
         <p>An example in Swift</p>
         <pre><code class="hljs swift">struct Stack&lt;Item&gt; {
   var items = [Item]()
+  func pop() -&gt; Item
 }</code></pre>
         <p class="fragment">…is basically just generating…</p>
         <pre class="fragment"><code class="hljs swift">struct StackInteger {
   var items = [Integer]()
+  func pop() -&gt; Integer
 }</code></pre>
         <pre class="fragment"><code class="hljs swift">struct StackString {
   var items = [String]()
+  func pop() -&gt; String
 }</code></pre>
       </section>
 
