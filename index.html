@@ -137,8 +137,8 @@ opt1.
         <p>We can generate too! (at build time)</p>
         <pre><code class="hljs go">//go:generate ./optional Document</code></pre>
         <pre class="fragment"><code class="hljs go">type Optional&lt;%= Item %&gt; interface {
-	Try(func(&lt;%= Item %&gt;) (&lt;%= Item %&gt;, error)) Optional&lt;%= Item %&gt;
-	HandleErr(func(error) error) Optional&lt;%= Item %&gt;
+  Try(func(&lt;%= Item %&gt;) (&lt;%= Item %&gt;, error)) Optional&lt;%= Item %&gt;
+  HandleErr(func(error) error) Optional&lt;%= Item %&gt;
 }</code></pre>
       </section>
 
