@@ -49,10 +49,10 @@ if err != nil {
   }
 }</code></pre>
         <ul>
-          <li class="check fragment">Catch problems at build time</li>
           <li class="cross fragment">Duplicated error handling</li>
           <li class="cross fragment">Hard to understand</li>
           <li class="cross fragment">Lots of boilerplate</li>
+          <li class="check fragment">Catch problems at build time</li>
         </ul>
       </section>
     </section>
@@ -76,8 +76,8 @@ opt2.
   Try(saveDocument).
   HandleErr(printError)</code></pre>
         <ul>
-          <li class="check fragment">Handle error once</li>
           <li class="check fragment">Easy to understand</li>
+          <li class="check fragment">Handle error once</li>
           <li class="check fragment">Catch problems at build time</li>
           <li class="cross fragment">Lots of boilerplate</li>
         </ul>
@@ -97,8 +97,8 @@ opt2.
       <section>
         <p>Using OptionalAny</p>
         <pre><code class="hljs go">doc3 := entities.NewDocument("document 3")
-opt1 := optionals.WrapAny(doc3, nil)
-opt1.
+opt3 := optionals.WrapAny(doc3, nil)
+opt3.
   Try(printAny).
   Try(saveAny).
   HandleErr(printError)</code></pre>
@@ -145,8 +145,8 @@ opt1.
       <section>
         <p>Using Optional&lt;%= Item %&gt;</p>
         <pre class=""><code class="hljs go">doc3 := entities.NewDocument("document 2")
-opt2 := optionals.WrapDocument(doc2)
-opt2.
+opt3 := optionals.WrapDocument(doc2)
+opt3.
   Try(printDocument).
   Try(saveDocument).
   HandleErr(printError)</code></pre>
